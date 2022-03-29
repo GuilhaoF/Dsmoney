@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Modal from 'react-modal';
+import { Header } from './components/Header';
+import { Dashboard } from './components/Dashboard';
+import { GlobalStyle } from './styles/global';
+import { useState } from 'react';
+import { NewTransactionModal } from './components/NewTransactionModal';
+import { TransactionsProvider } from './TransactionsContext';
 
-function App() {
+Modal.setAppElement('#root')
+
+export function App() {
+
+  const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] = useState(false);
+  
+  //funcao para abrir o modal 
+  //essa funcao e' passada via props para o botao que esta no header
+  function handleOpenNewTransactionModal() {
+      setIsNewTransactionModalOpen(true)//seta modal como true , o abrindo
+  }
+  function handleCloseNewTransactionModal() {
+      setIsNewTransactionModalOpen(false)
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    //passando provider para os componentes
+    // tem que ser passado um value
+    <TransactionsProvider>
+      <Header onOpenNewTransactionModal={handleOpenNewTransactionModal}  /> 
+      <Dashboard />
+      <NewTransactionModal isOpen={isNewTransactionModalOpen} onRequestClose={handleCloseNewTransactionModal}/>
+      <GlobalStyle />
+    </TransactionsProvider>
   );
 }
 
-export default App;
