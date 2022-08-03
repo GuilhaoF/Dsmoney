@@ -24,7 +24,7 @@ createServer({
           id:2,
           title:'Netflix',
           type:'withdraw',
-          amount:-55.90,
+          amount:55.90,
           category:'entretenimento',
           createdAt: new Date('2022-02-15 9:00:00'),
         }
